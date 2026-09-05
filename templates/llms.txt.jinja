@@ -1,0 +1,17 @@
+# {{ name }}
+
+> {{ experience[0].title }} at {{ experience[0].company }}{% if contact.location %}, based in {{ contact.location }}{% endif %}.
+
+## Resume
+
+- [Full resume (Markdown)]({{ site_url }}/index.md): Complete work experience, skills, and education
+- [Resume (PDF)]({{ site_url }}/print.pdf): Printable version
+
+## Profiles
+
+{% if contact.linkedin %}
+- [LinkedIn]({{ contact.linkedin }})
+{% endif %}
+{% if contact.github %}
+- [GitHub]({{ contact.github }})
+{% endif %}

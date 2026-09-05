@@ -1,0 +1,43 @@
+{
+  "name": "Your Name",
+  "contact": {
+    "email": "you@example.com",
+    "location": "Your City, Country",
+    "github": "https://github.com/your-username",
+    "linkedin": "https://www.linkedin.com/in/your-username"
+  },
+  "summary": "A short one or two line summary of who you are and what you do. Replace everything in this file with your own details.",
+  "skills": [
+    {
+      "category": "Languages",
+      "items": ["Your Language 1", "Your Language 2", "Your Language 3"]
+    },
+    {
+      "category": "Frameworks",
+      "items": ["Your Framework 1", "Your Framework 2"]
+    },
+    {
+      "category": "Tools",
+      "items": ["Your Tool 1", "Your Tool 2", "Your Tool 3"]
+    }
+  ],
+  "experience": [
+    {
+      "title": "Your Job Title",
+      "company": "Your Company",
+      "start": "Date",
+      "end": "Present",
+      "highlights": [
+        "A highlight of this role.",
+        "Another highlight."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Your Degree",
+      "school": "Your School",
+      "year": "Year"
+    }
+  ]
+}

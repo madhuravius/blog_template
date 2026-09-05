@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Writing — {{ name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="icon" href="../favicon.ico">
+  <style>{{ css }}</style>
+  <link rel="alternate" type="application/rss+xml" title="Writing — {{ name }}" href="feed.xml">
+  <link rel="alternate" type="text/markdown" href="../index.md">
+  <link rel="describedby" href="../llms.txt">
+</head>
+<body>
+  {% include "_nav.html.jinja" with context %}
+  <h1>Writing</h1>
+  {% if posts %}
+  <ul class="post-list">
+    {% for post in posts %}
+    <li class="post-item">
+      <div class="entry-header">
+        <a href="{{ post.slug }}/"><h3>{{ post.title }}</h3></a>
+        <span class="dates">{{ post.date }}</span>
+      </div>
+      {% if post.summary %}
+      <p class="post-summary">{{ post.summary }}</p>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="note">No posts yet.</p>
+  {% endif %}
+</body>
+</html>

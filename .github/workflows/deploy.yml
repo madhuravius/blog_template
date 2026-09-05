@@ -1,0 +1,46 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install WeasyPrint + image optimization system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 libharfbuzz-subset0 \
+            libwebp-dev libwebpdemux2 libwebpmux3
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Copy static assets into dist/
+        run: mkdir -p dist && cp -R public/. dist/
+
+      - name: Render dist/index.html
+        run: uv run scripts/render_html.py
+
+      - name: Render dist/index.md and dist/llms.txt
+        run: uv run scripts/render_llms.py
+
+      - name: Render dist/blog/ (posts, feed, optimized images)
+        run: uv run scripts/render_blog.py
+
+      - name: Build dist/print.pdf
+        run: uv run scripts/build_pdf.py
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Change --project-name to your Cloudflare Pages project name.
+          command: pages deploy dist --project-name=resume

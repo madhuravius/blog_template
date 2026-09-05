@@ -1,0 +1,57 @@
+{# Markdown rendition of the resume, for LLM/agent consumption (see llms.txt). #}
+# {{ name }}
+
+{% if title %}
+{{ title }}
+{% endif %}
+{% set contact_parts = [] %}
+{% if contact.email %}{% set _ = contact_parts.append(contact.email) %}{% endif %}
+{% if contact.location %}{% set _ = contact_parts.append(contact.location) %}{% endif %}
+{% if contact.phone %}{% set _ = contact_parts.append(contact.phone) %}{% endif %}
+{% if contact.website %}{% set _ = contact_parts.append(contact.website) %}{% endif %}
+{% if contact.linkedin %}{% set _ = contact_parts.append(contact.linkedin) %}{% endif %}
+{% if contact.github %}{% set _ = contact_parts.append(contact.github) %}{% endif %}
+{% if contact_parts %}
+{{ contact_parts | join(" · ") }}
+{% endif %}
+
+{% if summary %}
+## Summary
+
+{{ summary }}
+
+{% endif %}
+{% if skills %}
+## Technical Skills
+
+{% for group in skills %}
+- **{{ group.category }}:** {{ group["items"] | join(", ") }}
+{% endfor %}
+
+{% endif %}
+{% if experience %}
+## Work Experience
+
+{% for job in experience %}
+### {{ job.company }}, {{ job.title }}
+{{ job.start }} – {{ job.end }}
+
+{% if job.highlights %}
+{% for point in job.highlights %}
+- {{ point }}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+{% if education %}
+## Education
+
+{% for school in education %}
+- **{{ school.school }}**, {{ school.degree }} ({{ school.year }})
+{% endfor %}
+
+{% endif %}
+{% if note %}
+Note: {{ note }}
+{% endif %}
