@@ -9,16 +9,20 @@ A static resume + blog site, generated end to end from a `resume.json` data
 file and a folder of Markdown posts. No Node, no database, no server — just a
 small Python pipeline that dumps static files into `dist/`.
 
-```
-resume.json  →  templates/resume.html.jinja  →  dist/index.html  →  dist/print.pdf
-   (edit this)      (layout, rarely touched)       (generated)         (generated)
-             \
-              →  templates/resume.md.jinja  →  dist/index.md
-              →  templates/llms.txt.jinja   →  dist/llms.txt
+```mermaid
+flowchart LR
+    R["resume.json<br/>(edit this)"] --> H["templates/resume.html.jinja<br/>(layout, rarely touched)"]
+    H --> I["dist/index.html<br/>(generated)"]
+    I --> P["dist/print.pdf<br/>(generated)"]
+    R --> M["templates/resume.md.jinja"]
+    M --> IM["dist/index.md"]
+    R --> L["templates/llms.txt.jinja"]
+    L --> LL["dist/llms.txt"]
 
-posts/*.md    →  scripts/render_blog.py      →  dist/blog/  (index.html, <slug>/, feed.xml)
+    B["posts/*.md"] --> S["scripts/render_blog.py"]
+    S --> D["dist/blog/<br/>(index.html, &lt;slug&gt;/, feed.xml)"]
 
-public/  →  copied as-is into dist/  (style.css, favicon, logo, robots.txt)
+    A["public/<br/>(copied as-is)"] --> ST["dist/<br/>(style.css, favicon, logo, robots.txt)"]
 ```
 
 `dist/` is the full deployable static site — everything needed to serve it
@@ -53,11 +57,11 @@ the site without scraping HTML.
    SITE_URL=https://yourdomain.com just build
    ```
 
-   > [!IMPORTANT]
-   > If you never set `SITE_URL`, the build still succeeds — only quieter
-   > things break: the RSS feed and `llms.txt` will point at the default
-   > `https://example.com` instead of your real domain. Set it once at build
-   > time (or export it in your CI) and don't ship the default.
+> [!IMPORTANT]
+> If you never set `SITE_URL`, the build still succeeds — only quieter things
+> break: the RSS feed and `llms.txt` will point at the default
+> `https://example.com` instead of your real domain. Set it once at build time
+> (or export it in your CI) and don't ship the default.
 
 ## Files
 
